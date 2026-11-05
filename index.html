@@ -1,0 +1,4062 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#073f45">
+
+  <meta
+    name="description"
+    content="App da Laryssa Aventureira — versão Singapura"
+  >
+
+  <title>App da Laryssa Aventureira — Singapura</title>
+
+  <style>
+    :root {
+      --background: #f6f1e8;
+      --paper: #fffdf9;
+      --ink: #17373a;
+      --muted: #6c7c7c;
+
+      --green: #0b5960;
+      --green-dark: #063a40;
+      --green-light: #dcefeb;
+
+      --coral: #e76f61;
+      --coral-light: #ffe6df;
+
+      --gold: #e5b65c;
+      --gold-light: #fff2ce;
+
+      --blue: #4285f4;
+      --blue-dark: #2f67c8;
+
+      --line: #dce5e2;
+
+      --shadow:
+        0 14px 40px rgba(8, 63, 70, 0.11);
+
+      --shadow-small:
+        0 7px 22px rgba(8, 63, 70, 0.09);
+
+      --safe-top:
+        env(safe-area-inset-top, 0px);
+
+      --safe-bottom:
+        env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(220, 239, 235, 0.92),
+          transparent 32%
+        ),
+        var(--background);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    a {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 820px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding-bottom: calc(96px + var(--safe-bottom));
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      animation: page-enter 0.25s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes page-enter {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content {
+      padding: 20px 17px 34px;
+    }
+
+    .section-label {
+      margin-bottom: 7px;
+      color: var(--coral);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      line-height: 1.15;
+    }
+
+    .section-description {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    /* =====================================================
+       BOTÕES
+       ===================================================== */
+
+    .primary-button,
+    .secondary-button,
+    .small-button,
+    .icon-button,
+    .plan-button {
+      border: 0;
+      cursor: pointer;
+      transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .primary-button:active,
+    .secondary-button:active,
+    .small-button:active,
+    .icon-button:active,
+    .plan-button:active {
+      transform: scale(0.97);
+    }
+
+    .primary-button {
+      min-height: 48px;
+      padding: 13px 17px;
+      color: var(--green-dark);
+      background: #ffd58a;
+      border-radius: 15px;
+      box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.16);
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 13px 17px;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      font-weight: 900;
+    }
+
+    .small-button {
+      display: inline-flex;
+      min-height: 41px;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 11px;
+      color: var(--green);
+      border: 1px solid #cfe1dc;
+      border-radius: 11px;
+      background: #f6fbf9;
+      font-size: 0.69rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .small-button.solid {
+      color: white;
+      border-color: var(--green);
+      background: var(--green);
+    }
+
+    .small-button.google {
+      color: white;
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .small-button.google:hover {
+      background: var(--blue-dark);
+    }
+
+    .icon-button {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      place-items: center;
+      color: var(--green);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: white;
+      font-size: 1rem;
+    }
+
+    .icon-button.active {
+      color: white;
+      border-color: var(--coral);
+      background: var(--coral);
+    }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .hero {
+      position: relative;
+      min-height: 590px;
+      overflow: hidden;
+      padding:
+        calc(28px + var(--safe-top))
+        20px
+        34px;
+      color: white;
+      background:
+        radial-gradient(
+          circle at 82% 13%,
+          rgba(255, 213, 138, 0.25),
+          transparent 17%
+        ),
+        radial-gradient(
+          circle at 10% 48%,
+          rgba(231, 111, 97, 0.2),
+          transparent 22%
+        ),
+        linear-gradient(
+          165deg,
+          #0e6970 0%,
+          #073f45 53%,
+          #032b30 100%
+        );
+      border-radius: 0 0 36px 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 95px;
+      right: -65px;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 30px rgba(255, 255, 255, 0.025),
+        0 0 0 68px rgba(255, 255, 255, 0.02);
+    }
+
+    .hero-top,
+    .hero-main {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: 999px;
+      background: rgba(3, 43, 48, 0.38);
+      backdrop-filter: blur(10px);
+      font-size: 0.71rem;
+      font-weight: 800;
+    }
+
+    .hero-main {
+      display: flex;
+      min-height: 465px;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-kicker {
+      margin-bottom: 11px;
+      color: #ffe0a6;
+      font-size: 0.73rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      max-width: 650px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.45rem, 11vw, 4.5rem);
+      line-height: 0.97;
+      text-shadow:
+        0 5px 24px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero-title span {
+      display: block;
+      margin-top: 8px;
+      color: #ffd58a;
+      font-size: 0.49em;
+      font-style: italic;
+    }
+
+    .hero-text {
+      max-width: 570px;
+      margin: 17px 0 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.94rem;
+      line-height: 1.58;
+    }
+
+    .trip-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .trip-chip {
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.11);
+      font-size: 0.71rem;
+      font-weight: 800;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 23px;
+    }
+
+    .skyline {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 140px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .building {
+      position: absolute;
+      bottom: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.35),
+          rgba(255, 255, 255, 0.05)
+        );
+      border-radius: 5px 5px 0 0;
+    }
+
+    .b1 { left: 2%; width: 50px; height: 72px; }
+    .b2 { left: 15%; width: 35px; height: 108px; }
+    .b3 { left: 30%; width: 65px; height: 58px; }
+    .b4 { right: 28%; width: 42px; height: 120px; }
+    .b5 { right: 12%; width: 60px; height: 84px; }
+    .b6 { right: 1%; width: 25px; height: 50px; }
+
+    /* =====================================================
+       CONTAGEM REGRESSIVA
+       ===================================================== */
+
+    .countdown-card {
+      position: relative;
+      z-index: 10;
+      margin: -19px 17px 0;
+      padding: 18px;
+      border: 1px solid rgba(11, 89, 96, 0.08);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .countdown-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .countdown-header strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.02rem;
+    }
+
+    .countdown-header span {
+      color: var(--muted);
+      font-size: 0.69rem;
+      text-align: right;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .countdown-item {
+      padding: 11px 4px;
+      text-align: center;
+      background: var(--green-light);
+      border-radius: 13px;
+    }
+
+    .countdown-item b {
+      display: block;
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .countdown-item small {
+      color: var(--muted);
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* =====================================================
+       INÍCIO
+       ===================================================== */
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-top: 22px;
+    }
+
+    .home-card {
+      min-height: 145px;
+      padding: 16px;
+      text-align: left;
+      border: 1px solid rgba(11, 89, 96, 0.08);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+      cursor: pointer;
+    }
+
+    .home-card.featured {
+      grid-column: 1 / -1;
+      min-height: 132px;
+      color: white;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(255, 213, 138, 0.18),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          var(--green),
+          var(--green-dark)
+        );
+    }
+
+    .home-card-icon {
+      display: grid;
+      width: 43px;
+      height: 43px;
+      margin-bottom: 12px;
+      place-items: center;
+      background: var(--green-light);
+      border-radius: 14px;
+      font-size: 1.24rem;
+    }
+
+    .home-card.featured .home-card-icon {
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    .home-card h3 {
+      margin: 0;
+      font-size: 0.93rem;
+    }
+
+    .home-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.46;
+    }
+
+    .home-card.featured p {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .current-plan-card {
+      margin-top: 20px;
+      padding: 17px;
+      color: white;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--coral),
+          #c95c51
+        );
+      box-shadow: var(--shadow-small);
+    }
+
+    .current-plan-card small {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.78);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .current-plan-card h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+    }
+
+    .current-plan-card p {
+      margin: 7px 0 13px;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .current-plan-card button {
+      width: 100%;
+      min-height: 43px;
+      color: var(--coral);
+      border: 0;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .day-previews {
+      display: grid;
+      gap: 11px;
+      margin-top: 15px;
+    }
+
+    .day-preview {
+      display: grid;
+      grid-template-columns: 57px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      text-align: left;
+      border: 1px solid rgba(11, 89, 96, 0.08);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+      cursor: pointer;
+    }
+
+    .day-date {
+      padding: 8px 4px;
+      color: white;
+      text-align: center;
+      background: var(--green);
+      border-radius: 13px;
+    }
+
+    .day-date b {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      line-height: 1;
+    }
+
+    .day-date small {
+      font-size: 0.61rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .day-preview h4 {
+      margin: 0;
+      font-size: 0.88rem;
+    }
+
+    .day-preview p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.69rem;
+    }
+
+    .day-arrow {
+      color: var(--coral);
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    /* =====================================================
+       CABEÇALHO INTERNO
+       ===================================================== */
+
+    .inner-header {
+      position: sticky;
+      z-index: 800;
+      top: 0;
+      padding:
+        calc(17px + var(--safe-top))
+        17px
+        16px;
+      color: white;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(255, 213, 138, 0.13),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          var(--green-dark),
+          var(--green)
+        );
+      box-shadow:
+        0 8px 24px rgba(8, 63, 70, 0.18);
+    }
+
+    .inner-header-label {
+      color: #ffd58a;
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .inner-header h2 {
+      margin: 4px 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.52rem;
+    }
+
+    .inner-header p {
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.74rem;
+      line-height: 1.42;
+    }
+
+    .notice {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      padding: 14px;
+      color: #70531e;
+      border: 1px solid #f0d790;
+      border-radius: 16px;
+      background: var(--gold-light);
+      font-size: 0.74rem;
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       SELETOR DO PLANO NOTURNO
+       ===================================================== */
+
+    .night-planner {
+      margin-bottom: 25px;
+      padding: 17px;
+      border: 1px solid rgba(11, 89, 96, 0.1);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+    }
+
+    .night-planner h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+    }
+
+    .night-planner > p {
+      margin: 7px 0 14px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.48;
+    }
+
+    .plan-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .plan-button {
+      min-height: 72px;
+      padding: 10px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8faf8;
+      font-size: 0.7rem;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .plan-button span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1.12rem;
+    }
+
+    .plan-button.active {
+      color: white;
+      border-color: var(--green);
+      background: var(--green);
+      box-shadow:
+        0 8px 20px rgba(11, 89, 96, 0.2);
+    }
+
+    .swap-plan-button {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 9px;
+      color: white;
+      border: 0;
+      border-radius: 13px;
+      background: var(--coral);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .plan-summary {
+      margin-top: 12px;
+      padding: 11px;
+      color: var(--green-dark);
+      border-radius: 12px;
+      background: var(--green-light);
+      font-size: 0.7rem;
+      line-height: 1.45;
+    }
+
+    /* =====================================================
+       LINHA DO TEMPO
+       ===================================================== */
+
+    .day-block {
+      margin-bottom: 34px;
+      scroll-margin-top: 115px;
+    }
+
+    .day-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 13px;
+      margin-bottom: 15px;
+    }
+
+    .day-heading h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .day-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.73rem;
+    }
+
+    .day-number {
+      min-width: 49px;
+      padding: 9px 7px;
+      color: white;
+      text-align: center;
+      background: var(--coral);
+      border-radius: 14px;
+    }
+
+    .day-number b {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.32rem;
+      line-height: 1;
+    }
+
+    .day-number small {
+      font-size: 0.58rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      margin-bottom: 6px;
+      background: #e4ebe8;
+      border-radius: 999px;
+    }
+
+    .progress-track span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background:
+        linear-gradient(
+          90deg,
+          var(--coral),
+          var(--gold)
+        );
+      border-radius: inherit;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      margin-bottom: 17px;
+      color: var(--muted);
+      font-size: 0.65rem;
+      text-align: right;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 27px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 7px;
+      left: 8px;
+      width: 2px;
+      background:
+        linear-gradient(
+          var(--coral),
+          var(--gold),
+          var(--green)
+        );
+    }
+
+    .event-card {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 17px;
+      border: 1px solid rgba(11, 89, 96, 0.08);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+    }
+
+    .event-card::before {
+      content: "";
+      position: absolute;
+      z-index: 6;
+      top: 21px;
+      left: -25px;
+      width: 12px;
+      height: 12px;
+      border: 3px solid var(--background);
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow:
+        0 0 0 2px var(--coral);
+    }
+
+    .event-card.completed {
+      opacity: 0.65;
+    }
+
+    .event-card.completed .event-title {
+      text-decoration: line-through;
+    }
+
+    /* Fotos */
+
+    .event-photo {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--green),
+          var(--green-dark)
+        );
+    }
+
+    .event-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition:
+        opacity 0.4s ease,
+        transform 0.5s ease;
+    }
+
+    .event-photo.loaded img {
+      opacity: 1;
+    }
+
+    .event-photo::after {
+      content: "";
+      position: absolute;
+      inset: 43% 0 0;
+      background:
+        linear-gradient(
+          transparent,
+          rgba(2, 30, 34, 0.76)
+        );
+      pointer-events: none;
+    }
+
+    .photo-loading {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      display: grid;
+      padding: 20px;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .event-photo.loaded .photo-loading {
+      display: none;
+    }
+
+    .photo-caption {
+      position: absolute;
+      z-index: 3;
+      right: 10px;
+      bottom: 9px;
+      left: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .photo-place-name {
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .photo-credit {
+      display: none;
+      flex: 0 0 auto;
+      padding: 5px 7px;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(3, 43, 48, 0.52);
+      backdrop-filter: blur(8px);
+      font-size: 0.54rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .event-photo.loaded .photo-credit {
+      display: inline-flex;
+    }
+
+    .event-body {
+      padding: 15px;
+    }
+
+    .event-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .event-time {
+      margin-bottom: 7px;
+      color: var(--coral);
+      font-size: 0.7rem;
+      font-weight: 900;
+    }
+
+    .event-title {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.3;
+    }
+
+    .event-actions {
+      display: flex;
+      flex-shrink: 0;
+      gap: 6px;
+    }
+
+    .event-description {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.55;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 11px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 8px;
+      color: var(--green);
+      background: var(--green-light);
+      border-radius: 999px;
+      font-size: 0.61rem;
+      font-weight: 900;
+    }
+
+    .badge.optional {
+      color: #71541f;
+      background: var(--gold-light);
+    }
+
+    .badge.reserve {
+      color: #93463d;
+      background: var(--coral-light);
+    }
+
+    .badge.special {
+      color: white;
+      background: var(--coral);
+    }
+
+    .event-links {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    /* =====================================================
+       ALIMENTAÇÃO
+       ===================================================== */
+
+    .food-options {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .food-card {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfaf6;
+    }
+
+    .food-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .food-tier {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--coral);
+      font-size: 0.57rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .food-name {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    .food-price {
+      flex-shrink: 0;
+      padding: 5px 7px;
+      color: var(--green);
+      background: var(--green-light);
+      border-radius: 9px;
+      font-size: 0.63rem;
+      font-weight: 900;
+    }
+
+    .food-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.67rem;
+      line-height: 1.45;
+    }
+
+    .food-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .food-links a {
+      color: var(--green);
+      font-size: 0.66rem;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    /* =====================================================
+       PREPARAÇÃO
+       ===================================================== */
+
+    .info-card {
+      margin-bottom: 14px;
+      padding: 16px;
+      border: 1px solid rgba(11, 89, 96, 0.08);
+      border-radius: 19px;
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+    }
+
+    .info-card h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.07rem;
+    }
+
+    .info-card > p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.73rem;
+      line-height: 1.48;
+    }
+
+    .checklist,
+    .information-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #f8faf8;
+      cursor: pointer;
+    }
+
+    .check-item input {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 auto;
+      margin: 1px 0 0;
+      accent-color: var(--green);
+    }
+
+    .check-item span {
+      font-size: 0.74rem;
+      line-height: 1.43;
+    }
+
+    .information-link,
+    .information-button {
+      display: flex;
+      width: 100%;
+      min-height: 45px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px;
+      color: var(--green);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #f8faf8;
+      cursor: pointer;
+      font-size: 0.73rem;
+      font-weight: 900;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .budget-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px;
+      border-radius: 12px;
+      background: #f8faf8;
+    }
+
+    .budget-row span {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .budget-row strong {
+      color: var(--green);
+      font-size: 0.73rem;
+      text-align: right;
+    }
+
+    .budget-row.total {
+      background: var(--green-light);
+    }
+
+    /* =====================================================
+       NAVEGAÇÃO
+       ===================================================== */
+
+    .bottom-navigation {
+      position: fixed;
+      z-index: 1200;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      padding:
+        7px
+        10px
+        calc(7px + var(--safe-bottom));
+      pointer-events: none;
+    }
+
+    .bottom-navigation-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: min(calc(100% - 12px), 760px);
+      padding: 6px;
+      border: 1px solid rgba(11, 89, 96, 0.11);
+      border-radius: 22px;
+      background: rgba(255, 253, 249, 0.95);
+      box-shadow:
+        0 13px 36px rgba(8, 63, 70, 0.2);
+      backdrop-filter: blur(18px);
+      pointer-events: auto;
+    }
+
+    .navigation-button {
+      display: flex;
+      min-height: 54px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: #7a8887;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.59rem;
+      font-weight: 900;
+    }
+
+    .navigation-button.active {
+      color: white;
+      background: var(--green);
+    }
+
+    .navigation-icon {
+      font-size: 1.1rem;
+    }
+
+    /* =====================================================
+       MODAL E TOAST
+       ===================================================== */
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 3000;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 17px;
+      background: rgba(3, 29, 33, 0.64);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(100%, 540px);
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 22px;
+      border-radius: 26px;
+      background:
+        radial-gradient(
+          circle at top right,
+          #ffe9dc,
+          transparent 35%
+        ),
+        var(--paper);
+      box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.27);
+    }
+
+    .modal-symbol {
+      display: grid;
+      width: 61px;
+      height: 61px;
+      margin: 0 auto 14px;
+      place-items: center;
+      color: white;
+      background: var(--coral);
+      border-radius: 50%;
+      font-size: 1.75rem;
+    }
+
+    .modal h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .modal-description {
+      margin: 12px 0 18px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.63;
+      text-align: center;
+    }
+
+    .modal-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .modal-actions .primary-button {
+      width: 100%;
+      color: white;
+      background: var(--green);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 4000;
+      bottom: calc(95px + var(--safe-bottom));
+      left: 50%;
+      max-width: calc(100% - 32px);
+      padding: 11px 15px;
+      color: white;
+      background: var(--green-dark);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      font-size: 0.72rem;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 10px);
+      transition: 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (min-width: 680px) {
+      .hero {
+        margin-top: 12px;
+        border-radius: 34px;
+      }
+
+      .home-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .home-card.featured {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- ===================================================
+         INÍCIO
+         =================================================== -->
+
+    <section id="home-page" class="page active">
+
+      <header class="hero">
+
+        <div class="hero-top">
+          <div class="hero-pill">✦ Nossa aventura</div>
+          <div class="hero-pill">🌦️ 24–31 °C</div>
+        </div>
+
+        <div class="hero-main">
+
+          <div class="hero-kicker">
+            7–9 de novembro de 2026
+          </div>
+
+          <h1 class="hero-title">
+            App da Laryssa Aventureira
+            <span>versão Singapura</span>
+          </h1>
+
+          <p class="hero-text">
+            Três dias de sabores, luzes, fotografias e descobertas
+            para viver juntos — com calma, carinho e espaço para
+            aproveitar cada momento.
+          </p>
+
+          <div class="trip-chips">
+            <span class="trip-chip">✈️ AK 701</span>
+            <span class="trip-chip">🏨 Clarke Quay</span>
+            <span class="trip-chip">🚲 Marina Bay</span>
+            <span class="trip-chip">🏎️ Skyline Luge</span>
+          </div>
+
+          <div class="hero-actions">
+
+            <button
+              class="primary-button"
+              type="button"
+              onclick="navigateTo('itinerary-page')"
+            >
+              Ver nossa aventura
+            </button>
+
+            <button
+              class="secondary-button"
+              type="button"
+              aria-label="Abrir surpresa"
+              onclick="openModal('surprise-modal')"
+            >
+              💌
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="skyline" aria-hidden="true">
+          <div class="building b1"></div>
+          <div class="building b2"></div>
+          <div class="building b3"></div>
+          <div class="building b4"></div>
+          <div class="building b5"></div>
+          <div class="building b6"></div>
+        </div>
+
+      </header>
+
+      <section class="countdown-card">
+
+        <div class="countdown-header">
+
+          <strong id="countdown-title">
+            Contagem para Singapura
+          </strong>
+
+          <span>
+            Saída de Kuala Lumpur<br>
+            07/11/2026 às 6h05
+          </span>
+
+        </div>
+
+        <div class="countdown-grid">
+
+          <div class="countdown-item">
+            <b id="days">—</b>
+            <small>dias</small>
+          </div>
+
+          <div class="countdown-item">
+            <b id="hours">—</b>
+            <small>horas</small>
+          </div>
+
+          <div class="countdown-item">
+            <b id="minutes">—</b>
+            <small>min</small>
+          </div>
+
+          <div class="countdown-item">
+            <b id="seconds">—</b>
+            <small>seg</small>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="content">
+
+        <div class="home-grid">
+
+          <button
+            class="home-card"
+            type="button"
+            onclick="navigateTo('itinerary-page')"
+          >
+            <span class="home-card-icon">🗓️</span>
+
+            <h3>Roteiro com fotos</h3>
+
+            <p>
+              Linha do tempo, restaurantes e Google Maps.
+            </p>
+          </button>
+
+          <button
+            class="home-card"
+            type="button"
+            onclick="goToDay(2)"
+          >
+            <span class="home-card-icon">🏎️</span>
+
+            <h3>Skyline Luge</h3>
+
+            <p>
+              A experiência de carrinho por gravidade em Sentosa.
+            </p>
+          </button>
+
+          <button
+            class="home-card featured"
+            type="button"
+            onclick="openModal('surprise-modal')"
+          >
+            <span class="home-card-icon">💌</span>
+
+            <h3>Para a Laryssa</h3>
+
+            <p>
+              Uma mensagem para a minha companheira de aventuras.
+            </p>
+          </button>
+
+        </div>
+
+        <section class="current-plan-card">
+
+          <small>Plano noturno selecionado</small>
+
+          <h3 id="home-plan-title"></h3>
+
+          <p id="home-plan-description"></p>
+
+          <button
+            type="button"
+            onclick="toggleNightPlan(true)"
+          >
+            🔄 Trocar as noites
+          </button>
+
+        </section>
+
+        <section style="margin-top:29px">
+
+          <div class="section-label">
+            Nossa programação
+          </div>
+
+          <h2 class="section-title">
+            Três dias inesquecíveis
+          </h2>
+
+          <p class="section-description">
+            Um roteiro flexível para se adaptar ao clima.
+          </p>
+
+          <div class="day-previews">
+
+            <button
+              class="day-preview"
+              type="button"
+              onclick="goToDay(1)"
+            >
+              <span class="day-date">
+                <b>07</b>
+                <small>nov</small>
+              </span>
+
+              <span>
+                <h4>Chegada e primeira noite</h4>
+                <p id="day-one-preview"></p>
+              </span>
+
+              <span class="day-arrow">›</span>
+            </button>
+
+            <button
+              class="day-preview"
+              type="button"
+              onclick="goToDay(2)"
+            >
+              <span class="day-date">
+                <b>08</b>
+                <small>nov</small>
+              </span>
+
+              <span>
+                <h4>Fort Canning, Luge e noite</h4>
+                <p id="day-two-preview"></p>
+              </span>
+
+              <span class="day-arrow">›</span>
+            </button>
+
+            <button
+              class="day-preview"
+              type="button"
+              onclick="goToDay(3)"
+            >
+              <span class="day-date">
+                <b>09</b>
+                <small>nov</small>
+              </span>
+
+              <span>
+                <h4>Centro histórico e despedida</h4>
+                <p>Civic District, Jewel e retorno</p>
+              </span>
+
+              <span class="day-arrow">›</span>
+            </button>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================
+         ROTEIRO
+         =================================================== -->
+
+    <section id="itinerary-page" class="page">
+
+      <header class="inner-header">
+
+        <div class="inner-header-label">
+          7–9 de novembro de 2026
+        </div>
+
+        <h2>Nossa linha do tempo</h2>
+
+        <p>
+          Fotos, Google Maps e noites intercambiáveis.
+        </p>
+
+      </header>
+
+      <div class="content">
+
+        <div class="notice">
+
+          <span>🌦️</span>
+
+          <span>
+            O plano recomendado, se o sábado estiver seco, é assistir
+            aos shows no sábado e deixar a bicicleta para domingo.
+            Bicicleta e Skyline Luge são atividades sensíveis à chuva.
+          </span>
+
+        </div>
+
+        <section class="night-planner">
+
+          <h3>Escolha o plano das noites</h3>
+
+          <p>
+            A mudança reorganiza automaticamente o sábado e o domingo.
+            A escolha fica salva neste celular.
+          </p>
+
+          <div class="plan-options">
+
+            <button
+              id="plan-a-button"
+              class="plan-button"
+              type="button"
+              onclick="setNightPlan('shows-saturday')"
+            >
+              <span>✨</span>
+              Shows sábado<br>
+              Bicicleta domingo
+            </button>
+
+            <button
+              id="plan-b-button"
+              class="plan-button"
+              type="button"
+              onclick="setNightPlan('bike-saturday')"
+            >
+              <span>🚲</span>
+              Bicicleta sábado<br>
+              Shows domingo
+            </button>
+
+          </div>
+
+          <button
+            class="swap-plan-button"
+            type="button"
+            onclick="toggleNightPlan(false)"
+          >
+            🔄 Trocar itinerários noturnos
+          </button>
+
+          <div
+            id="plan-summary"
+            class="plan-summary"
+          ></div>
+
+        </section>
+
+        <div id="itinerary-container"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================
+         PREPARAÇÃO
+         =================================================== -->
+
+    <section id="preparation-page" class="page">
+
+      <header class="inner-header">
+
+        <div class="inner-header-label">
+          Tudo sob controle
+        </div>
+
+        <h2>Preparar a viagem</h2>
+
+        <p>
+          Checklist, reservas e links importantes.
+        </p>
+
+      </header>
+
+      <div class="content">
+
+        <article class="info-card">
+
+          <h3>Checklist</h3>
+
+          <p>
+            As marcações ficam salvas neste aparelho.
+          </p>
+
+          <div class="checklist">
+
+            <label class="check-item">
+              <input type="checkbox" data-check="arrival-card">
+
+              <span>
+                Preencher o SG Arrival Card dentro dos três dias
+                anteriores à chegada.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="flights">
+
+              <span>
+                Confirmar horários e terminais dos voos
+                AK 701 e TR 468.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="bike-rental">
+
+              <span>
+                Confirmar se GoCycling @ Singapore Flyer estará
+                funcionando, o horário limite de devolução e a
+                disponibilidade de duas bicicletas.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="bike-safety">
+
+              <span>
+                Confirmar que as bicicletas possuem luzes e solicitar
+                capacetes. Levar calçado fechado.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="luge">
+
+              <span>
+                Reservar o Skyline Luge Singapore e verificar a
+                política para chuva forte.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="lounge">
+
+              <span>
+                Confirmar acesso, preço e horário do Changi Lounge.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="shows">
+
+              <span>
+                Reconfirmar Garden Rhapsody e Spectra na semana da viagem.
+              </span>
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" data-check="weather">
+
+              <span>
+                Verificar chuva e raios antes de escolher o plano
+                noturno no aplicativo.
+              </span>
+            </label>
+
+          </div>
+
+        </article>
+
+        <article class="info-card">
+
+          <h3>Bicicleta independente</h3>
+
+          <p>
+            Ponto proposto de retirada e devolução:
+            GoCycling @ Singapore Flyer. A operação em 2026 precisa
+            ser confirmada.
+          </p>
+
+          <div class="information-list">
+
+            <a
+              class="information-link"
+              href="https://www.google.com/maps/search/?api=1&query=GoCycling%20Singapore%20Flyer%2030%20Raffles%20Avenue%20Singapore"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>🚲 Retirada — Google Maps</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://www.google.com/maps/search/?api=1&query=GoCycling%20Singapore%20Flyer%2030%20Raffles%20Avenue%20Singapore"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>🏁 Devolução — mesmo ponto</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://gocycling.sg/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Site da GoCycling</span>
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </article>
+
+        <article class="info-card">
+
+          <h3>Skyline Luge Singapore</h3>
+
+          <p>
+            Fica em Sentosa. É um carrinho por gravidade com direção
+            e freio próprios. Não é uma corrida com colisões.
+          </p>
+
+          <div class="information-list">
+
+            <a
+              class="information-link"
+              href="https://www.google.com/maps/search/?api=1&query=Skyline%20Luge%20Singapore%2045%20Siloso%20Beach%20Walk"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>🏎️ Abrir no Google Maps</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://www.skylineluge.com/en/singapore/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Ingressos e informações oficiais</span>
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </article>
+
+        <article class="info-card">
+
+          <h3>Hotel</h3>
+
+          <p>
+            Holiday Inn Express Singapore Clarke Quay by IHG<br>
+            2 Magazine Road, Singapore 059573
+          </p>
+
+          <div class="information-list">
+
+            <button
+              class="information-button"
+              type="button"
+              onclick="copyHotelAddress()"
+            >
+              <span>📋 Copiar endereço</span>
+              <span>›</span>
+            </button>
+
+            <a
+              class="information-link"
+              href="https://www.google.com/maps/search/?api=1&query=Holiday%20Inn%20Express%20Singapore%20Clarke%20Quay%202%20Magazine%20Road"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>📍 Abrir hotel no Google Maps</span>
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </article>
+
+        <article class="info-card">
+
+          <h3>Links importantes</h3>
+
+          <div class="information-list">
+
+            <a
+              class="information-link"
+              href="https://eservices.ica.gov.sg/sgarrivalcard/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>SG Arrival Card</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://www.changiairport.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Aeroporto de Changi</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://www.gardensbythebay.com.sg/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Gardens by the Bay</span>
+              <span>↗</span>
+            </a>
+
+            <a
+              class="information-link"
+              href="https://www.weather.gov.sg/weather-forecast-4dayoutlook/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Previsão oficial do tempo</span>
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       NAVEGAÇÃO INFERIOR
+       ===================================================== -->
+
+  <nav
+    class="bottom-navigation"
+    aria-label="Navegação principal"
+  >
+
+    <div class="bottom-navigation-inner">
+
+      <button
+        class="navigation-button active"
+        type="button"
+        data-page="home-page"
+      >
+        <span class="navigation-icon">⌂</span>
+        <span>Início</span>
+      </button>
+
+      <button
+        class="navigation-button"
+        type="button"
+        data-page="itinerary-page"
+      >
+        <span class="navigation-icon">🗓️</span>
+        <span>Roteiro</span>
+      </button>
+
+      <button
+        class="navigation-button"
+        type="button"
+        data-page="preparation-page"
+      >
+        <span class="navigation-icon">✓</span>
+        <span>Preparar</span>
+      </button>
+
+    </div>
+
+  </nav>
+
+  <!-- =====================================================
+       SURPRESA
+       ===================================================== -->
+
+  <div
+    id="surprise-modal"
+    class="modal-backdrop"
+    onclick="closeFromBackdrop(event, 'surprise-modal')"
+  >
+
+    <div class="modal">
+
+      <div class="modal-symbol">♥</div>
+
+      <h3>Para a minha aventureira</h3>
+
+      <p class="modal-description">
+        Laryssa, preparei cada detalhe desta viagem para que a gente
+        viva Singapura do nosso jeito: com calma, curiosidade,
+        boas comidas e muitas histórias para lembrar.
+        <br><br>
+        Que essa seja apenas mais uma das muitas aventuras que ainda
+        vamos viver juntos. 💛
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          class="primary-button"
+          type="button"
+          onclick="closeModal('surprise-modal')"
+        >
+          Vamos viver essa aventura
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    /* =====================================================
+       LOCAIS
+       ===================================================== */
+
+    const places = {
+      airport: {
+        name: "Aeroporto de Changi — Terminal 4",
+        emoji: "✈️",
+        mapQuery: "Changi Airport Terminal 4 Singapore",
+        info: "https://www.changiairport.com/",
+        photoQuery: "Singapore Changi Airport Terminal 4"
+      },
+
+      jewel: {
+        name: "Jewel Changi Airport",
+        emoji: "💧",
+        mapQuery: "Jewel Changi Airport Singapore",
+        info: "https://www.jewelchangiairport.com/",
+        photoQuery: "Jewel Changi Airport Rain Vortex"
+      },
+
+      hotel: {
+        name: "Holiday Inn Express Clarke Quay",
+        emoji: "🏨",
+        mapQuery:
+          "Holiday Inn Express Singapore Clarke Quay 2 Magazine Road",
+        info:
+          "https://www.ihg.com/holidayinnexpress/hotels/us/en/singapore/sincl/hoteldetail",
+        photoQuery: "Clarke Quay Singapore River"
+      },
+
+      clarke: {
+        name: "Clarke Quay e Singapore River",
+        emoji: "🌉",
+        mapQuery: "Clarke Quay Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/clarke-quay/",
+        photoQuery: "Clarke Quay Singapore"
+      },
+
+      chinatown: {
+        name: "Chinatown e Maxwell Food Centre",
+        emoji: "🏮",
+        mapQuery: "Maxwell Food Centre Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/chinatown/",
+        photoQuery: "Chinatown Singapore"
+      },
+
+      kampong: {
+        name: "Kampong Glam",
+        emoji: "🕌",
+        mapQuery: "Kampong Glam Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/kampong-gelam/",
+        photoQuery: "Kampong Glam Sultan Mosque Singapore"
+      },
+
+      marina: {
+        name: "Marina Bay",
+        emoji: "🌃",
+        mapQuery: "Marina Bay Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/marina-bay/",
+        photoQuery: "Marina Bay Singapore night"
+      },
+
+      bikeRental: {
+        name: "GoCycling @ Singapore Flyer",
+        emoji: "🚲",
+        mapQuery:
+          "GoCycling Singapore Flyer 30 Raffles Avenue Singapore",
+        info: "https://gocycling.sg/",
+        photoQuery: "Singapore Flyer Marina Bay bicycle"
+      },
+
+      fortCanning: {
+        name: "Fort Canning Tree Tunnel",
+        emoji: "📸",
+        mapQuery: "Fort Canning Tree Tunnel Singapore",
+        info:
+          "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park",
+        photoQuery: "Fort Canning Tree Tunnel Singapore"
+      },
+
+      littleIndia: {
+        name: "Little India",
+        emoji: "🪔",
+        mapQuery: "Little India Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/little-india/",
+        photoQuery: "Little India Singapore"
+      },
+
+      skylineLuge: {
+        name: "Skyline Luge Singapore",
+        emoji: "🏎️",
+        mapQuery:
+          "Skyline Luge Singapore 45 Siloso Beach Walk Sentosa",
+        info:
+          "https://www.skylineluge.com/en/singapore/",
+        photoQuery: "Skyline Luge Singapore Sentosa"
+      },
+
+      gardens: {
+        name: "Gardens by the Bay",
+        emoji: "🌿",
+        mapQuery: "Gardens by the Bay Singapore",
+        info:
+          "https://www.gardensbythebay.com.sg/",
+        photoQuery: "Gardens by the Bay Singapore"
+      },
+
+      supertree: {
+        name: "Supertree Grove",
+        emoji: "✨",
+        mapQuery: "Supertree Grove Singapore",
+        info:
+          "https://www.gardensbythebay.com.sg/en/things-to-do/attractions/garden-rhapsody.html",
+        photoQuery: "Supertree Grove Garden Rhapsody night"
+      },
+
+      spectra: {
+        name: "Spectra — Marina Bay Sands",
+        emoji: "🌈",
+        mapQuery: "Spectra Event Plaza Marina Bay Sands",
+        info:
+          "https://www.marinabaysands.com/attractions/spectra.html",
+        photoQuery: "Spectra Marina Bay Sands light show"
+      },
+
+      civic: {
+        name: "Civic District",
+        emoji: "🏛️",
+        mapQuery: "National Gallery Singapore",
+        info:
+          "https://www.visitsingapore.com/see-do-singapore/places-to-see/civic-district/",
+        photoQuery: "National Gallery Singapore Civic District"
+      }
+    };
+
+    /* =====================================================
+       EVENTOS FIXOS
+       ===================================================== */
+
+    const dayOneFixedEvents = [
+      {
+        id: "d1-airport",
+        time: "07h15–08h30",
+        title: "Chegada ao Aeroporto de Changi",
+        place: "airport",
+        description:
+          "Desembarque, imigração e retirada das malas. O terminal do AK 701 deve ser confirmado antes da viagem.",
+        duration: "60–75 min",
+        cost: "Sem custo",
+        essential: true,
+        reserve: "Confirmar terminal"
+      },
+
+      {
+        id: "d1-lounge",
+        time: "08h30–10h00",
+        title: "Café da manhã no Changi Lounge",
+        place: "jewel",
+        description:
+          "Seguir ao Jewel após a imigração. Confirmar o acesso e o preço do lounge antes da viagem.",
+        duration: "1h–1h30",
+        cost: "SGD 28–40 por pessoa",
+        essential: true,
+        reserve: "Confirmar acesso",
+        info:
+          "https://www.jewelchangiairport.com/en/attractions/changi-lounge.html"
+      },
+
+      {
+        id: "d1-hotel",
+        time: "10h00–11h15",
+        title: "Ir ao hotel e deixar as malas",
+        place: "hotel",
+        description:
+          "Grab ou táxi é a opção mais confortável com bagagem. O check-in poderá estar disponível apenas mais tarde.",
+        duration: "40–60 min",
+        cost: "SGD 25–35 o casal",
+        essential: true
+      },
+
+      {
+        id: "d1-clarke",
+        time: "11h15–12h15",
+        title: "Passeio por Clarke Quay",
+        place: "clarke",
+        description:
+          "Caminhada leve pela margem do Singapore River para começar a viagem sem pressa.",
+        duration: "1h",
+        cost: "Gratuito",
+        essential: true
+      },
+
+      {
+        id: "d1-lunch",
+        time: "12h15–13h15",
+        title: "Almoço em Chinatown",
+        place: "chinatown",
+        description:
+          "Escolham conforme a fila, a fome e o orçamento.",
+        duration: "1h",
+        cost: "SGD 6–50 por pessoa",
+        essential: true,
+
+        food: [
+          {
+            tier: "Até SGD 10",
+            name: "Tian Tian Hainanese Chicken Rice",
+            price: "SGD 6–9",
+            description:
+              "Chicken rice no Maxwell Food Centre.",
+            mapQuery:
+              "Tian Tian Hainanese Chicken Rice Maxwell Food Centre"
+          },
+
+          {
+            tier: "Até SGD 20",
+            name: "Song Fa Bak Kut Teh",
+            price: "SGD 16–20",
+            description:
+              "Sopa de costela com arroz.",
+            mapQuery:
+              "Song Fa Bak Kut Teh New Bridge Road Singapore"
+          },
+
+          {
+            tier: "Até SGD 50",
+            name: "Yum Cha Chinatown",
+            price: "SGD 32–45",
+            description:
+              "Dim sum variado para compartilhar.",
+            mapQuery:
+              "Yum Cha Chinatown Singapore"
+          }
+        ]
+      },
+
+      {
+        id: "d1-chinatown",
+        time: "13h15–15h00",
+        title: "Templos e ruas de Chinatown",
+        place: "chinatown",
+        description:
+          "Buddha Tooth Relic Temple, Sri Mariamman Temple e ruas históricas. Reduzam o passeio se estiverem cansados.",
+        duration: "1h45",
+        cost: "Gratuito",
+        essential: true
+      },
+
+      {
+        id: "d1-rest",
+        time: "15h00–16h45",
+        title: "Check-in e descanso",
+        place: "hotel",
+        description:
+          "Pausa importante depois do voo cedo. Tomar banho, trocar de roupa e carregar os celulares.",
+        duration: "1h45",
+        cost: "Incluído",
+        essential: true
+      }
+    ];
+
+    const dayTwoFixedEvents = [
+      {
+        id: "d2-photo",
+        time: "07h00–07h45",
+        title: "A foto no Fort Canning Tree Tunnel",
+        place: "fortCanning",
+        description:
+          "O momento especial da Laryssa. Fotografar de baixo para cima usando a lente grande-angular do celular.",
+        duration: "45 min",
+        cost: "Gratuito",
+        essential: true
+      },
+
+      {
+        id: "d2-breakfast",
+        time: "08h15–09h15",
+        title: "Café da manhã no hotel",
+        place: "hotel",
+        description:
+          "Retorno a pé para tomar o café já incluído na hospedagem.",
+        duration: "1h",
+        cost: "Incluído",
+        essential: true
+      },
+
+      {
+        id: "d2-little-india",
+        time: "09h30–11h15",
+        title: "Little India e Deepavali",
+        place: "littleIndia",
+        description:
+          "Passeio concentrado por Serangoon Road, templo, Tan Teng Niah e ruas decoradas. A programação de 2026 precisa ser confirmada.",
+        duration: "1h45",
+        cost: "Gratuito",
+        essential: true,
+        reserve: "Programação a confirmar"
+      },
+
+      {
+        id: "d2-lunch",
+        time: "11h15–12h15",
+        title: "Almoço em Little India",
+        place: "littleIndia",
+        description:
+          "Almoço antes de seguir para Sentosa.",
+        duration: "1h",
+        cost: "SGD 6–50 por pessoa",
+        essential: true,
+
+        food: [
+          {
+            tier: "Até SGD 10",
+            name: "Tekka Centre",
+            price: "SGD 6–10",
+            description:
+              "Biryani, prata ou thosai.",
+            mapQuery:
+              "Tekka Centre Singapore"
+          },
+
+          {
+            tier: "Até SGD 20",
+            name: "Komala Vilas",
+            price: "SGD 12–20",
+            description:
+              "Thali vegetariano ou masala dosa.",
+            mapQuery:
+              "Komala Vilas Serangoon Road Singapore"
+          },
+
+          {
+            tier: "Até SGD 50",
+            name: "The Banana Leaf Apolo",
+            price: "SGD 35–50",
+            description:
+              "Curry de peixe com arroz e acompanhamentos.",
+            mapQuery:
+              "The Banana Leaf Apolo Race Course Road Singapore"
+          }
+        ]
+      },
+
+      {
+        id: "d2-sentosa-transfer",
+        time: "12h15–13h15",
+        title: "Deslocamento para Sentosa",
+        place: "skylineLuge",
+        description:
+          "Seguir de MRT e Sentosa Express ou Grab. O Grab é mais confortável e economiza tempo neste dia.",
+        duration: "45–60 min",
+        cost: "SGD 12–25 o casal",
+        essential: false
+      },
+
+      {
+        id: "d2-luge",
+        time: "13h15–15h45",
+        title: "Skyline Luge Singapore",
+        place: "skylineLuge",
+        description:
+          "O “Mario Kart da vida real”: carrinho por gravidade com direção e freio próprios, acompanhado do Skyride. Não é uma corrida de colisão. Reservem tempo para filas e mais de uma descida.",
+        duration: "2h–2h30",
+        cost: "Aprox. SGD 27–39 por pessoa",
+        essential: false,
+        reserve: "Reserva recomendada",
+        special: "Nova experiência"
+      },
+
+      {
+        id: "d2-buffer",
+        time: "15h45–17h15",
+        title: "Saída de Sentosa e pausa de transição",
+        place: "hotel",
+        description:
+          "Tempo de segurança para sair de Sentosa, voltar ao hotel se necessário e seguir para a atividade noturna.",
+        duration: "1h30",
+        cost: "SGD 4–20 o casal",
+        essential: true
+      }
+    ];
+
+    const dayThreeEvents = [
+      {
+        id: "d3-breakfast",
+        time: "07h30–08h30",
+        title: "Café da manhã no hotel",
+        place: "hotel",
+        description:
+          "Último café da manhã com calma antes de preparar as malas.",
+        duration: "1h",
+        cost: "Incluído",
+        essential: true
+      },
+
+      {
+        id: "d3-checkout",
+        time: "08h30–09h00",
+        title: "Checkout e guarda das malas",
+        place: "hotel",
+        description:
+          "Deixar as malas no hotel para passear sem peso.",
+        duration: "30 min",
+        cost: "Normalmente gratuito",
+        essential: true
+      },
+
+      {
+        id: "d3-civic",
+        time: "09h00–11h00",
+        title: "Caminhada pelo Civic District",
+        place: "civic",
+        description:
+          "Old Hill Street Police Station, National Gallery, Victoria Theatre e Cavenagh Bridge.",
+        duration: "2h",
+        cost: "Gratuito",
+        essential: true
+      },
+
+      {
+        id: "d3-jewel",
+        time: "11h30–12h15",
+        title: "Seguir para o Jewel",
+        place: "jewel",
+        description:
+          "Retirar as malas e seguir ao aeroporto de Grab ou táxi.",
+        duration: "35–45 min",
+        cost: "SGD 25–40 o casal",
+        essential: true
+      },
+
+      {
+        id: "d3-lunch",
+        time: "12h15–13h30",
+        title: "Almoço de despedida no Jewel",
+        place: "jewel",
+        description:
+          "Última refeição antes do check-in.",
+        duration: "1h15",
+        cost: "SGD 8–50 por pessoa",
+        essential: true,
+
+        food: [
+          {
+            tier: "Até SGD 10",
+            name: "Food Republic",
+            price: "SGD 8–10",
+            description:
+              "Chicken rice, noodles ou refeição de hawker.",
+            mapQuery:
+              "Food Republic Jewel Changi Airport"
+          },
+
+          {
+            tier: "Até SGD 20",
+            name: "Song Fa Bak Kut Teh",
+            price: "SGD 16–20",
+            description:
+              "Bak kut teh com arroz.",
+            mapQuery:
+              "Song Fa Bak Kut Teh Jewel Changi Airport"
+          },
+
+          {
+            tier: "Até SGD 50",
+            name: "Violet Oon Singapore",
+            price: "SGD 38–50",
+            description:
+              "Culinária peranakan.",
+            mapQuery:
+              "Violet Oon Singapore Jewel Changi Airport"
+          }
+        ]
+      },
+
+      {
+        id: "d3-flight",
+        time: "14h00–17h00",
+        title: "Check-in e voo TR 468",
+        place: "jewel",
+        description:
+          "Confirmar o terminal de partida e estar no portão por volta das 16h.",
+        duration: "3h",
+        cost: "Passagem adquirida",
+        essential: true,
+        reserve: "Confirmar terminal"
+      }
+    ];
+
+    /* =====================================================
+       PLANOS NOTURNOS DINÂMICOS
+       ===================================================== */
+
+    function createShowNightEvents(dayNumber) {
+      return [
+        {
+          id: `d${dayNumber}-shows-dinner`,
+          time: "17h15–19h05",
+          title: "Jantar no Gardens by the Bay",
+          place: "gardens",
+          description:
+            "Chegar com antecedência, jantar e escolher um bom lugar para o Garden Rhapsody.",
+          duration: "1h30–1h50",
+          cost: "SGD 8–50 por pessoa",
+          essential: true,
+
+          food: [
+            {
+              tier: "Até SGD 10",
+              name: "Satay by the Bay",
+              price: "SGD 8–10",
+              description:
+                "Noodles, arroz ou pequena porção de satay.",
+              mapQuery:
+                "Satay by the Bay Singapore"
+            },
+
+            {
+              tier: "Até SGD 20",
+              name: "Supertree Food Hall",
+              price: "SGD 12–20",
+              description:
+                "Nasi lemak, noodles ou refeição rápida.",
+              mapQuery:
+                "Supertree Food Hall Gardens by the Bay"
+            },
+
+            {
+              tier: "Até SGD 50",
+              name: "Hortus",
+              price: "SGD 40–50",
+              description:
+                "Restaurante mediterrâneo. Reserva recomendada.",
+              mapQuery:
+                "Hortus Singapore Flower Dome"
+            }
+          ]
+        },
+
+        {
+          id: `d${dayNumber}-rhapsody`,
+          time: "19h15–20h00",
+          title: "Garden Rhapsody",
+          place: "supertree",
+          description:
+            "Chegar ao gramado central antes do show previsto para 19h45. O horário de novembro de 2026 precisa ser confirmado.",
+          duration: "45 min com espera",
+          cost: "Gratuito",
+          essential: true,
+          reserve: "Confirmar horário"
+        },
+
+        {
+          id: `d${dayNumber}-marina-walk`,
+          time: "20h00–20h40",
+          title: "Caminhada noturna pela Marina Bay",
+          place: "marina",
+          description:
+            "Caminhar do Supertree Grove ao Event Plaza de Marina Bay Sands, sem correr.",
+          duration: "30–40 min",
+          cost: "Gratuito",
+          essential: true
+        },
+
+        {
+          id: `d${dayNumber}-spectra`,
+          time: "21h00–21h15",
+          title: "Show Spectra",
+          place: "spectra",
+          description:
+            "Show de água, luz e música no Event Plaza. A sessão das 21h combina melhor com o Garden Rhapsody.",
+          duration: "15 min",
+          cost: "Gratuito",
+          essential: true,
+          reserve: "Confirmar horário"
+        }
+      ];
+    }
+
+    function createBikeNightEvents(dayNumber) {
+      return [
+        {
+          id: `d${dayNumber}-bike-pickup`,
+          time: "17h30–18h00",
+          title: "Retirar as bicicletas",
+          place: "bikeRental",
+          description:
+            "Ponto proposto: GoCycling @ Singapore Flyer, 30 Raffles Avenue. Confirmar funcionamento, disponibilidade de duas bicicletas, capacetes, luzes e horário limite de devolução.",
+          duration: "30 min",
+          cost: "Tarifa de 2026 a confirmar",
+          essential: true,
+          reserve: "Confirmar operação"
+        },
+
+        {
+          id: `d${dayNumber}-bike-ride`,
+          time: "18h00–20h00",
+          title: "Passeio independente de bicicleta",
+          place: "marina",
+          description:
+            "Percurso sugerido: Singapore Flyer → Esplanade → Merlion → Fullerton Bay → Marina Bay Sands → Gardens by the Bay → Marina Barrage → retorno ao Singapore Flyer. Aproximadamente 10–13 km. Desmontem em áreas cheias e na Helix Bridge, se necessário.",
+          duration: "Cerca de 2h",
+          cost: "Aprox. SGD 15–30 por pessoa",
+          essential: true,
+          reserve: "Sujeito ao clima"
+        },
+
+        {
+          id: `d${dayNumber}-bike-return`,
+          time: "20h00–20h15",
+          title: "Devolver as bicicletas",
+          place: "bikeRental",
+          description:
+            "Devolução prevista no mesmo ponto de retirada: GoCycling @ Singapore Flyer. Não deixem a devolução para o último minuto.",
+          duration: "15 min",
+          cost: "Incluído no aluguel",
+          essential: true,
+          reserve: "Confirmar fechamento"
+        },
+
+        {
+          id: `d${dayNumber}-bike-dinner`,
+          time: "20h15–21h30",
+          title: "Jantar depois da bicicleta",
+          place: "marina",
+          description:
+            "Jantar na região da Esplanade e Marina Bay após a devolução.",
+          duration: "1h–1h15",
+          cost: "SGD 8–50 por pessoa",
+          essential: true,
+
+          food: [
+            {
+              tier: "Até SGD 10",
+              name: "Marina Square Food Court",
+              price: "SGD 7–10",
+              description:
+                "Arroz, noodles ou refeição rápida em ambiente coberto.",
+              mapQuery:
+                "Marina Square Food Court Singapore"
+            },
+
+            {
+              tier: "Até SGD 20",
+              name: "Makansutra Gluttons Bay",
+              price: "SGD 12–20",
+              description:
+                "Hawker ao ar livre próximo à Esplanade.",
+              mapQuery:
+                "Makansutra Gluttons Bay Singapore"
+            },
+
+            {
+              tier: "Até SGD 50",
+              name: "OverEasy Fullerton",
+              price: "SGD 35–50",
+              description:
+                "Hambúrgueres e pratos casuais com vista para Marina Bay.",
+              mapQuery:
+                "OverEasy Fullerton Singapore"
+            }
+          ]
+        }
+      ];
+    }
+
+    /* =====================================================
+       ESTADO DO PLANO
+       ===================================================== */
+
+    let nightPlan =
+      localStorage.getItem("laryssa-night-plan") ||
+      "shows-saturday";
+
+    function getItinerary() {
+      const saturdayNight =
+        nightPlan === "shows-saturday"
+          ? createShowNightEvents(1)
+          : createBikeNightEvents(1);
+
+      const sundayNight =
+        nightPlan === "shows-saturday"
+          ? createBikeNightEvents(2)
+          : createShowNightEvents(2);
+
+      return [
+        {
+          day: 1,
+          date: "Sábado, 7 de novembro",
+          title:
+            nightPlan === "shows-saturday"
+              ? "Chegada, Chinatown e shows de luzes"
+              : "Chegada, Chinatown e bicicleta",
+          events: [
+            ...dayOneFixedEvents,
+            ...saturdayNight
+          ]
+        },
+
+        {
+          day: 2,
+          date: "Domingo, 8 de novembro",
+          title:
+            nightPlan === "shows-saturday"
+              ? "Fort Canning, Skyline Luge e bicicleta"
+              : "Fort Canning, Skyline Luge e shows",
+          events: [
+            ...dayTwoFixedEvents,
+            ...sundayNight
+          ]
+        },
+
+        {
+          day: 3,
+          date: "Segunda-feira, 9 de novembro",
+          title: "Centro histórico e despedida",
+          events: dayThreeEvents
+        }
+      ];
+    }
+
+    function setNightPlan(plan) {
+      nightPlan = plan;
+
+      localStorage.setItem(
+        "laryssa-night-plan",
+        nightPlan
+      );
+
+      renderItinerary();
+      updatePlanInterface();
+
+      showToast(
+        nightPlan === "shows-saturday"
+          ? "Shows movidos para sábado"
+          : "Bicicleta movida para sábado"
+      );
+    }
+
+    function toggleNightPlan(fromHome) {
+      const newPlan =
+        nightPlan === "shows-saturday"
+          ? "bike-saturday"
+          : "shows-saturday";
+
+      setNightPlan(newPlan);
+
+      if (fromHome) {
+        navigateTo("itinerary-page");
+
+        window.setTimeout(() => {
+          document
+            .querySelector(".night-planner")
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+        }, 150);
+      }
+    }
+
+    function updatePlanInterface() {
+      const isShowsSaturday =
+        nightPlan === "shows-saturday";
+
+      document
+        .getElementById("plan-a-button")
+        ?.classList.toggle(
+          "active",
+          isShowsSaturday
+        );
+
+      document
+        .getElementById("plan-b-button")
+        ?.classList.toggle(
+          "active",
+          !isShowsSaturday
+        );
+
+      const title =
+        isShowsSaturday
+          ? "✨ Shows sábado • 🚲 Bicicleta domingo"
+          : "🚲 Bicicleta sábado • ✨ Shows domingo";
+
+      const description =
+        isShowsSaturday
+          ? "Plano recomendado se o sábado estiver seco: vocês garantem os shows logo na primeira noite."
+          : "Plano original: bicicleta no sábado e Garden Rhapsody + Spectra no domingo.";
+
+      const homeTitle =
+        document.getElementById(
+          "home-plan-title"
+        );
+
+      const homeDescription =
+        document.getElementById(
+          "home-plan-description"
+        );
+
+      const summary =
+        document.getElementById(
+          "plan-summary"
+        );
+
+      const dayOnePreview =
+        document.getElementById(
+          "day-one-preview"
+        );
+
+      const dayTwoPreview =
+        document.getElementById(
+          "day-two-preview"
+        );
+
+      if (homeTitle) {
+        homeTitle.textContent = title;
+      }
+
+      if (homeDescription) {
+        homeDescription.textContent =
+          description;
+      }
+
+      if (summary) {
+        summary.innerHTML =
+          `<strong>${title}</strong><br>${description}`;
+      }
+
+      if (dayOnePreview) {
+        dayOnePreview.textContent =
+          isShowsSaturday
+            ? "Changi, Chinatown, Garden Rhapsody e Spectra"
+            : "Changi, Chinatown e bicicleta em Marina Bay";
+      }
+
+      if (dayTwoPreview) {
+        dayTwoPreview.textContent =
+          isShowsSaturday
+            ? "Fort Canning, Skyline Luge e bicicleta"
+            : "Fort Canning, Skyline Luge e shows de luzes";
+      }
+    }
+
+    /* =====================================================
+       LINKS EXTERNOS
+       ===================================================== */
+
+    function googleMapsSearch(query) {
+      return (
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(query)
+      );
+    }
+
+    function googleImagesSearch(query) {
+      return (
+        "https://www.google.com/search?tbm=isch&q=" +
+        encodeURIComponent(query)
+      );
+    }
+
+    /* =====================================================
+       ARMAZENAMENTO
+       ===================================================== */
+
+    function loadSet(key) {
+      try {
+        return new Set(
+          JSON.parse(
+            localStorage.getItem(key)
+          ) || []
+        );
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveSet(key, value) {
+      try {
+        localStorage.setItem(
+          key,
+          JSON.stringify(
+            Array.from(value)
+          )
+        );
+      } catch {
+        /* Continua funcionando sem armazenamento. */
+      }
+    }
+
+    const favorites =
+      loadSet("laryssa-favorites");
+
+    const completed =
+      loadSet("laryssa-completed");
+
+    /* =====================================================
+       ALIMENTAÇÃO
+       ===================================================== */
+
+    function renderFood(food) {
+      if (!food) {
+        return "";
+      }
+
+      return `
+        <div class="food-options">
+
+          ${food.map((option) => `
+            <article class="food-card">
+
+              <div class="food-header">
+
+                <div>
+                  <span class="food-tier">
+                    ${option.tier}
+                  </span>
+
+                  <h5 class="food-name">
+                    ${option.name}
+                  </h5>
+                </div>
+
+                <span class="food-price">
+                  ${option.price}
+                </span>
+
+              </div>
+
+              <p>
+                ${option.description}
+              </p>
+
+              <div class="food-links">
+
+                <a
+                  href="${googleMapsSearch(option.mapQuery)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📍 Google Maps ↗
+                </a>
+
+                <a
+                  href="${googleImagesSearch(option.mapQuery)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📷 Ver fotos ↗
+                </a>
+
+              </div>
+
+            </article>
+          `).join("")}
+
+        </div>
+      `;
+    }
+
+    /* =====================================================
+       EVENTOS
+       ===================================================== */
+
+    function renderEvent(event) {
+      const place =
+        places[event.place];
+
+      const isFavorite =
+        favorites.has(event.id);
+
+      const isCompleted =
+        completed.has(event.id);
+
+      return `
+        <article
+          class="event-card ${isCompleted ? "completed" : ""}"
+          data-event-card="${event.id}"
+        >
+
+          <div
+            class="event-photo"
+            data-photo-place="${event.place}"
+          >
+
+            <div class="photo-loading">
+              ${place.emoji} Carregando foto…
+            </div>
+
+            <img
+              alt="Foto de ${place.name}"
+              loading="lazy"
+              decoding="async"
+            >
+
+            <div class="photo-caption">
+
+              <span class="photo-place-name">
+                ${place.emoji} ${place.name}
+              </span>
+
+              <a
+                class="photo-credit"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Wikimedia ↗
+              </a>
+
+            </div>
+
+          </div>
+
+          <div class="event-body">
+
+            <div class="event-top">
+
+              <div>
+
+                <div class="event-time">
+                  ◷ ${event.time}
+                </div>
+
+                <h4 class="event-title">
+                  ${event.title}
+                </h4>
+
+              </div>
+
+              <div class="event-actions">
+
+                <button
+                  class="icon-button ${isFavorite ? "active" : ""}"
+                  type="button"
+                  data-favorite="${event.id}"
+                  aria-label="Favoritar atividade"
+                >
+                  ${isFavorite ? "♥" : "♡"}
+                </button>
+
+                <button
+                  class="icon-button ${isCompleted ? "active" : ""}"
+                  type="button"
+                  data-complete="${event.id}"
+                  aria-label="Concluir atividade"
+                >
+                  ✓
+                </button>
+
+              </div>
+
+            </div>
+
+            <p class="event-description">
+              ${event.description}
+            </p>
+
+            <div class="badge-row">
+
+              <span class="badge">
+                ⏱ ${event.duration}
+              </span>
+
+              <span class="badge">
+                💰 ${event.cost}
+              </span>
+
+              <span
+                class="badge ${event.essential ? "" : "optional"}"
+              >
+                ${event.essential ? "★ Essencial" : "＋ Opcional"}
+              </span>
+
+              ${event.reserve ? `
+                <span class="badge reserve">
+                  📌 ${event.reserve}
+                </span>
+              ` : ""}
+
+              ${event.special ? `
+                <span class="badge special">
+                  🏎️ ${event.special}
+                </span>
+              ` : ""}
+
+            </div>
+
+            ${renderFood(event.food)}
+
+            <div class="event-links">
+
+              <a
+                class="small-button"
+                href="${event.info || place.info}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ℹ Informações
+              </a>
+
+              <a
+                class="small-button google"
+                href="${googleMapsSearch(place.mapQuery)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                📍 Abrir no Google Maps
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+      `;
+    }
+
+    function renderItinerary() {
+      const itinerary =
+        getItinerary();
+
+      const container =
+        document.getElementById(
+          "itinerary-container"
+        );
+
+      container.innerHTML =
+        itinerary.map((day) => `
+          <section
+            class="day-block"
+            id="day-${day.day}"
+          >
+
+            <header class="day-heading">
+
+              <div>
+
+                <div class="section-label">
+                  Dia ${day.day}
+                </div>
+
+                <h3>${day.title}</h3>
+
+                <p>${day.date}</p>
+
+              </div>
+
+              <div class="day-number">
+                <b>${String(day.day + 6).padStart(2, "0")}</b>
+                <small>nov</small>
+              </div>
+
+            </header>
+
+            <div class="progress-track">
+              <span id="progress-${day.day}"></span>
+            </div>
+
+            <div
+              id="progress-text-${day.day}"
+              class="progress-text"
+            ></div>
+
+            <div class="timeline">
+              ${day.events.map(renderEvent).join("")}
+            </div>
+
+          </section>
+        `).join("");
+
+      bindEventButtons();
+      updateProgress();
+      initializePhotoObserver();
+    }
+
+    function bindEventButtons() {
+      document
+        .querySelectorAll("[data-favorite]")
+        .forEach((button) => {
+          button.addEventListener(
+            "click",
+            () => {
+              const id =
+                button.dataset.favorite;
+
+              if (favorites.has(id)) {
+                favorites.delete(id);
+                button.classList.remove(
+                  "active"
+                );
+                button.textContent = "♡";
+
+                showToast(
+                  "Removido dos favoritos"
+                );
+              } else {
+                favorites.add(id);
+                button.classList.add(
+                  "active"
+                );
+                button.textContent = "♥";
+
+                showToast(
+                  "Guardado nos favoritos"
+                );
+              }
+
+              saveSet(
+                "laryssa-favorites",
+                favorites
+              );
+            }
+          );
+        });
+
+      document
+        .querySelectorAll("[data-complete]")
+        .forEach((button) => {
+          button.addEventListener(
+            "click",
+            () => {
+              const id =
+                button.dataset.complete;
+
+              const card =
+                document.querySelector(
+                  `[data-event-card="${id}"]`
+                );
+
+              if (completed.has(id)) {
+                completed.delete(id);
+                button.classList.remove(
+                  "active"
+                );
+
+                card?.classList.remove(
+                  "completed"
+                );
+              } else {
+                completed.add(id);
+                button.classList.add(
+                  "active"
+                );
+
+                card?.classList.add(
+                  "completed"
+                );
+
+                showToast(
+                  "Mais uma memória vivida! ✓"
+                );
+              }
+
+              saveSet(
+                "laryssa-completed",
+                completed
+              );
+
+              updateProgress();
+            }
+          );
+        });
+    }
+
+    function updateProgress() {
+      getItinerary().forEach((day) => {
+        const total =
+          day.events.length;
+
+        const done =
+          day.events.filter(
+            (event) =>
+              completed.has(event.id)
+          ).length;
+
+        const percentage =
+          total
+            ? (done / total) * 100
+            : 0;
+
+        const progress =
+          document.getElementById(
+            `progress-${day.day}`
+          );
+
+        const text =
+          document.getElementById(
+            `progress-text-${day.day}`
+          );
+
+        if (progress) {
+          progress.style.width =
+            `${percentage}%`;
+        }
+
+        if (text) {
+          text.textContent =
+            `${done} de ${total} momentos concluídos`;
+        }
+      });
+    }
+
+    /* =====================================================
+       FOTOS DO WIKIMEDIA COMMONS
+       ===================================================== */
+
+    const photoCache =
+      new Map();
+
+    let photoObserver = null;
+
+    function initializePhotoObserver() {
+      if (photoObserver) {
+        photoObserver.disconnect();
+      }
+
+      const photoElements =
+        document.querySelectorAll(
+          "[data-photo-place]"
+        );
+
+      if (
+        "IntersectionObserver" in window
+      ) {
+        photoObserver =
+          new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (
+                  entry.isIntersecting
+                ) {
+                  loadPhotoElement(
+                    entry.target
+                  );
+
+                  photoObserver.unobserve(
+                    entry.target
+                  );
+                }
+              });
+            },
+            {
+              rootMargin: "300px"
+            }
+          );
+
+        photoElements.forEach(
+          (element) => {
+            photoObserver.observe(
+              element
+            );
+          }
+        );
+      } else {
+        photoElements.forEach(
+          loadPhotoElement
+        );
+      }
+    }
+
+    function getCommonsPhoto(placeId) {
+      if (photoCache.has(placeId)) {
+        return photoCache.get(
+          placeId
+        );
+      }
+
+      const request =
+        searchCommonsPhoto(
+          places[placeId].photoQuery
+        );
+
+      photoCache.set(
+        placeId,
+        request
+      );
+
+      return request;
+    }
+
+    async function searchCommonsPhoto(query) {
+      const parameters =
+        new URLSearchParams({
+          action: "query",
+          format: "json",
+          origin: "*",
+          generator: "search",
+          gsrsearch: query,
+          gsrnamespace: "6",
+          gsrlimit: "10",
+          prop: "imageinfo",
+          iiprop: "url|mime",
+          iiurlwidth: "1200"
+        });
+
+      const endpoint =
+        "https://commons.wikimedia.org/w/api.php?" +
+        parameters.toString();
+
+      const response =
+        await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error(
+          "Falha ao carregar foto"
+        );
+      }
+
+      const data =
+        await response.json();
+
+      const pages =
+        Object.values(
+          data.query?.pages || {}
+        );
+
+      const page =
+        pages.find((item) => {
+          const imageInfo =
+            item.imageinfo?.[0];
+
+          return (
+            imageInfo?.thumburl &&
+            imageInfo?.mime?.startsWith(
+              "image/"
+            ) &&
+            imageInfo.mime !==
+              "image/svg+xml"
+          );
+        });
+
+      if (!page) {
+        throw new Error(
+          "Foto não encontrada"
+        );
+      }
+
+      const imageInfo =
+        page.imageinfo[0];
+
+      return {
+        imageUrl:
+          imageInfo.thumburl,
+
+        pageUrl:
+          imageInfo.descriptionurl ||
+          "https://commons.wikimedia.org/"
+      };
+    }
+
+    async function loadPhotoElement(
+      photoElement
+    ) {
+      if (
+        photoElement.dataset.loaded ===
+        "true"
+      ) {
+        return;
+      }
+
+      photoElement.dataset.loaded =
+        "true";
+
+      const placeId =
+        photoElement.dataset.photoPlace;
+
+      const place =
+        places[placeId];
+
+      const image =
+        photoElement.querySelector(
+          "img"
+        );
+
+      const credit =
+        photoElement.querySelector(
+          ".photo-credit"
+        );
+
+      try {
+        const photo =
+          await getCommonsPhoto(placeId);
+
+        image.onload = () => {
+          photoElement.classList.add(
+            "loaded"
+          );
+        };
+
+        image.onerror = () => {
+          showPhotoFallback(
+            photoElement,
+            place
+          );
+        };
+
+        image.src =
+          photo.imageUrl;
+
+        credit.href =
+          photo.pageUrl;
+      } catch {
+        showPhotoFallback(
+          photoElement,
+          place
+        );
+      }
+    }
+
+    function showPhotoFallback(
+      photoElement,
+      place
+    ) {
+      const loading =
+        photoElement.querySelector(
+          ".photo-loading"
+        );
+
+      loading.innerHTML = `
+        <span>
+          ${place.emoji}
+          Foto indisponível<br><br>
+
+          <a
+            href="${googleImagesSearch(place.mapQuery)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+              color:white;
+              text-decoration:underline;
+              font-size:0.68rem;
+            "
+          >
+            Procurar fotos na internet ↗
+          </a>
+        </span>
+      `;
+    }
+
+    /* =====================================================
+       NAVEGAÇÃO
+       ===================================================== */
+
+    function navigateTo(pageId) {
+      document
+        .querySelectorAll(".page")
+        .forEach((page) => {
+          page.classList.toggle(
+            "active",
+            page.id === pageId
+          );
+        });
+
+      document
+        .querySelectorAll(
+          ".navigation-button"
+        )
+        .forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.page ===
+              pageId
+          );
+        });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    document
+      .querySelectorAll(
+        ".navigation-button"
+      )
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            navigateTo(
+              button.dataset.page
+            );
+          }
+        );
+      });
+
+    function goToDay(day) {
+      navigateTo(
+        "itinerary-page"
+      );
+
+      window.setTimeout(() => {
+        document
+          .getElementById(`day-${day}`)
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+      }, 130);
+    }
+
+    /* =====================================================
+       CONTAGEM REGRESSIVA
+       ===================================================== */
+
+    function updateCountdown() {
+      const departure =
+        new Date(
+          "2026-11-07T06:05:00+08:00"
+        );
+
+      const tripEnd =
+        new Date(
+          "2026-11-10T00:00:00+08:00"
+        );
+
+      const now =
+        new Date();
+
+      if (
+        now >= departure &&
+        now < tripEnd
+      ) {
+        document.getElementById(
+          "countdown-title"
+        ).textContent =
+          "A aventura começou!";
+
+        setCountdownHearts();
+
+        return;
+      }
+
+      if (now >= tripEnd) {
+        document.getElementById(
+          "countdown-title"
+        ).textContent =
+          "Memórias de Singapura";
+
+        setCountdownHearts();
+
+        return;
+      }
+
+      let difference =
+        departure.getTime() -
+        now.getTime();
+
+      const days =
+        Math.floor(
+          difference / 86400000
+        );
+
+      difference %= 86400000;
+
+      const hours =
+        Math.floor(
+          difference / 3600000
+        );
+
+      difference %= 3600000;
+
+      const minutes =
+        Math.floor(
+          difference / 60000
+        );
+
+      difference %= 60000;
+
+      const seconds =
+        Math.floor(
+          difference / 1000
+        );
+
+      document.getElementById(
+        "days"
+      ).textContent = days;
+
+      document.getElementById(
+        "hours"
+      ).textContent =
+        String(hours).padStart(
+          2,
+          "0"
+        );
+
+      document.getElementById(
+        "minutes"
+      ).textContent =
+        String(minutes).padStart(
+          2,
+          "0"
+        );
+
+      document.getElementById(
+        "seconds"
+      ).textContent =
+        String(seconds).padStart(
+          2,
+          "0"
+        );
+    }
+
+    function setCountdownHearts() {
+      [
+        "days",
+        "hours",
+        "minutes",
+        "seconds"
+      ].forEach((id) => {
+        document.getElementById(
+          id
+        ).textContent = "♥";
+      });
+    }
+
+    /* =====================================================
+       CHECKLIST
+       ===================================================== */
+
+    function initializeChecklist() {
+      const saved =
+        loadSet(
+          "laryssa-checklist"
+        );
+
+      document
+        .querySelectorAll(
+          "[data-check]"
+        )
+        .forEach((input) => {
+          input.checked =
+            saved.has(
+              input.dataset.check
+            );
+
+          input.addEventListener(
+            "change",
+            () => {
+              const id =
+                input.dataset.check;
+
+              if (input.checked) {
+                saved.add(id);
+              } else {
+                saved.delete(id);
+              }
+
+              saveSet(
+                "laryssa-checklist",
+                saved
+              );
+            }
+          );
+        });
+    }
+
+    /* =====================================================
+       MODAL, HOTEL E TOAST
+       ===================================================== */
+
+    function openModal(id) {
+      document
+        .getElementById(id)
+        ?.classList.add("open");
+
+      document.body.classList.add(
+        "modal-open"
+      );
+    }
+
+    function closeModal(id) {
+      document
+        .getElementById(id)
+        ?.classList.remove("open");
+
+      document.body.classList.remove(
+        "modal-open"
+      );
+    }
+
+    function closeFromBackdrop(
+      event,
+      id
+    ) {
+      if (event.target.id === id) {
+        closeModal(id);
+      }
+    }
+
+    async function copyHotelAddress() {
+      const address =
+        "Holiday Inn Express Singapore Clarke Quay by IHG, " +
+        "2 Magazine Road, Singapore 059573";
+
+      try {
+        await navigator.clipboard.writeText(
+          address
+        );
+
+        showToast(
+          "Endereço do hotel copiado"
+        );
+      } catch {
+        window.prompt(
+          "Copie o endereço:",
+          address
+        );
+      }
+    }
+
+    let toastTimer;
+
+    function showToast(message) {
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+      window.clearTimeout(
+        toastTimer
+      );
+
+      toastTimer =
+        window.setTimeout(() => {
+          toast.classList.remove(
+            "show"
+          );
+        }, 2300);
+    }
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Escape") {
+          closeModal(
+            "surprise-modal"
+          );
+        }
+      }
+    );
+
+    /* =====================================================
+       INICIALIZAÇÃO
+       ===================================================== */
+
+    function initializeApp() {
+      renderItinerary();
+      updatePlanInterface();
+      initializeChecklist();
+      updateCountdown();
+
+      window.setInterval(
+        updateCountdown,
+        1000
+      );
+    }
+
+    initializeApp();
+  </script>
+
+</body>
+</html>
